@@ -77,8 +77,19 @@ COLUMN "Profit" NUMERIC(10,2);
 
 
 UPDATE public."Sales Data"
-SET "Profit"="Total Amount" - ("Cost Price" + "Quantity Purchased")
+SET "Profit"="Total Amount" - ("Cost Price" * "Quantity Purchased")
 
+
+
+-- Verificar quantos registros serão afetados antes de deletar
+SELECT COUNT(*), "Product Name"
+FROM public."Sales Data"
+WHERE "Category" = 'Again'
+GROUP BY "Product Name";
+
+-- Deletar a categoria 'Again' 
+DELETE FROM public."Sales Data"
+WHERE "Category" = 'Again';
 
 
 -- Mostra o Valor Total e o Custo por País na semana da Black Friday
@@ -101,27 +112,38 @@ GROUP BY "Product Name"
 ORDER BY "Total Unit Sold" DESC
 LIMIT 5
 
--- Mostra os top5 Representantes de Vendas com menos Vendas
+-- Mostra os top1 Representantes de Vendas com menos Vendas
+
 
 SELECT 
 	"Sales Representative",
+	"Country",
+	"Store Location",
 	SUM("Total Amount") as "Total Sales"
 FROM public."Sales Data"
-GROUP BY "Sales Representative"
-ORDER BY "Total Sales"
-LIMIT 5;
+GROUP BY 
+	"Sales Representative", 
+    "Country", 
+    "Store Location"
+	 
+ORDER BY "Total Sales"  
+LIMIT 10;
 
 
--- Mostra o Top5 dos locais das lojas que mais vendem 
+-- Mostra o Top5 dos locais das lojas que menos vendem 
 
 SELECT
+	"Country",
 	"Store Location",
 	sum("Total Amount") as "Total Sales",
 	sum("Profit") as "Total Profit"
 FROM public."Sales Data"
-GROUP BY "Store Location"
-ORDER BY "Total Sales" DESC
+GROUP BY 
+	"Country", 
+	"Store Location"
+ORDER BY "Total Sales" 
 limit 5
+	
 	
 -- Mostra a Análise estatistica resumida das vendas e lucros
 
@@ -138,3 +160,14 @@ FROM public."Sales Data"
 
 
 
+--identifica quais produtos trazem mais lucro por unidade vendida.
+
+SELECT 
+    "Product Name",
+    "Category",
+    ROUND(SUM("Profit") / SUM("Quantity Purchased"), 2) AS "Lucro Por Unidade",
+    SUM("Quantity Purchased") AS "Total_Qty"
+FROM public."Sales Data"
+GROUP BY 1, 2
+ORDER BY "Lucro Por Unidade" DESC
+LIMIT 10;

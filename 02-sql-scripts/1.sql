@@ -5,7 +5,7 @@ COLUMN "Profit" NUMERIC(10,2);
 
 
 UPDATE public."Sales Data"
-SET "Profit"="Total Amount" - ("Cost Price" + "Quantity Purchased")
+SET "Profit"="Total Amount" - ("Cost Price" * "Quantity Purchased")
 
 
 
