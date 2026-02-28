@@ -31,7 +31,7 @@ Este projeto foi documentado em formato de estudo de caso completo no Medium, de
 ---
 
 # 📊 Dashboard Interativo (Power BI Web)
-
+ <img width="797" height="486" alt="dashboard" src="https://github.com/cicone-dev/data-analysis-sales-multinational-project/blob/main/04-power-bi-dashboard/SalesDashboard_powerBI_preview.png" />
 O dashboard executivo pode ser acessado publicamente via Power BI Service:
 
 🔎 **Acesse aqui:**  
@@ -119,4 +119,5 @@ A limpeza foi conduzida com visão de impacto financeiro — não apenas técnic
 - Tradução de dados em recomendações acionáveis
 
 ---
+
 
